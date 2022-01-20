@@ -5,7 +5,16 @@ This file contains a list of resources, primarily papers, that will be helpful i
 * scRNA-seq data
 
 * Differentiable programming
+** Dealing with scRNA-seq data
+*** ACE - Dimensionality reduction and neuralised clustering for scRNA-seq data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], code]
+*** Other resources
+- [[https://github.com/zhoushengisnoob/DeepClustering][A list of neural clustering techniques]]
+** Differentiable programming for solving combinatorial optimisation problems
+*** Implicit-MLE [[[https://arxiv.org/pdf/2106.01798.pdf][paper]], [[https://github.com/uclnlp/torch-imle][code]], [[https://www.youtube.com/watch?v=W2UT8NjUqrk][video]]]
+
 
 * Trajectory inference
+** Neural algorithms for Trajectory Inference
+*** VITAE [[[https://www.biorxiv.org/content/10.1101/2020.12.26.424452v1.full.pdf][paper]], [[https://github.com/jaydu1/VITAE][code]]]
 
 * Graph algorithms

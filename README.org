@@ -6,5 +6,5 @@ This repo contains notes and resource on a project to create a differentiable pr
 * Documents
 - [[file:resources.org][Resources]] - A list of papers related to the project.
 - [[file:code.org][Code]] - A breakdown of software that will be useful in creating an end-to-end differentiable system for calculating pseudotime trajectories.
-- [[org:technical_details.org][Technical Details]] - Technical details of how the system will function and a technical breakdown of its workings.
-- Project plan - A breakdown of the tasks that need to be completed and some project planning and management.
+- [[file:technical_details.org][Technical Details]] - Technical details of how the system will function and a technical breakdown of its workings.
+- [[file:project_plan.org][Project plan]] - A breakdown of the tasks that need to be completed and some project planning and management.

@@ -1,0 +1,18 @@
+#+TITLE: Technical Details
+
+* Overview
+The task of trajectory inference can be broken down into 4 subtasks.
+1. Dealing with sparse data
+2. Clustering
+3. Minimum spanning tree
+4. Mapping cells onto a trajectory backbone
+
+[[./images/project_flowchart.png]]
+
+* Dealing with sparse data
+
+* Clustering
+
+* Minimum spanning tree
+
+* Mapping cells onto a trajectory backbone

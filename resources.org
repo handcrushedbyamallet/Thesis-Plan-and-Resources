@@ -1,0 +1,11 @@
+#+TITLE: Resources
+
+This file contains a list of resources, primarily papers, that will be helpful in finishing the project.
+
+* scRNA-seq data
+
+* Differentiable programming
+
+* Trajectory inference
+
+* Graph algorithms

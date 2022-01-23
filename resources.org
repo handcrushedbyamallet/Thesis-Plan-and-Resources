@@ -6,17 +6,25 @@ This file contains a list of resources, primarily papers, that will be helpful i
 
 * Differentiable programming
 ** Dealing with scRNA-seq data
-*** ACE - Dimensionality reduction and neuralised clustering for scRNA-seq data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], [[https://bitbucket.org/noblelab/ace/src/master/][code]]]
+*** ACE - Dimensionality reduction and neuralised clustering for single-cell data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], [[https://bitbucket.org/noblelab/ace/src/master/][code]]]
 ACE is a methodology that combines dimensionality reduction and clustering on scRNA-seq data in order to identify distinct cell subgroups. ACE asks what expression profiles most distinctly identify the membership of a cell to a particular cell cluster. It constitutes 3 components:
 1. An autoencoder component to perform dimensionality reduction.
 2. A neuralised clustering algorithm to prescribe group membership that acts on the low dimensional output of the autoencoder.
 3. An adversarial perturbation routine to identify explanitory gene combinations.
+This is done in an end-to-end differentiable manner, employing a joint loss function to jointly optimise the clustering and embedding.
+
+ACE takes a single-cell gene expression matrix as input.
 #+attr_html: :width 500px
 [[./images/ace.png]]
+
+
+*** SAUCIE - Exploring single-cell data with deep multitasking neural networks [[[https://www.nature.com/articles/s41592-019-0576-7][paper]], [[https://github.com/KrishnaswamyLab/SAUCIE/][code]]]
+SAUCIE is a popular autoencoder for performing dimensionality reduction on scRNA-seq data. Notably, it is the encoder part of the ACE system.
 
 *** Other resources
 - [[https://github.com/zhoushengisnoob/DeepClustering][A list of neural clustering techniques]]
 - [[https://github.com/uci-cbcl/BioML][A list of differentiable systems for dealing with scRNA-seq data]]
+
 ** Differentiable programming for solving combinatorial optimisation problems
 *** Implicit-MLE [[[https://arxiv.org/pdf/2106.01798.pdf][paper]], [[https://github.com/uclnlp/torch-imle][code]], [[https://www.youtube.com/watch?v=W2UT8NjUqrk][video]]]
 *** Algorithmic concept-based explainable reasoning [[[https://arxiv.org/abs/2107.07493][paper]], [[https://github.com/HekpoMaH/algorithmic-concepts-reasoning][code]]]

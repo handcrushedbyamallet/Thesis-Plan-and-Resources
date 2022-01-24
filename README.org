@@ -1,4 +1,10 @@
 #+TITLE: Neural Algorithmic Reasoning for Pseudotime Trajectory Inference -- Notes and Resources
+#+DATE:    2022-01-24
+#+CONTACT: Sam Considine
+
+* Tasks [/]
+* Timeframe
+* Notes
 
 This repo contains notes and resource on a project to create a differentiable process for calculating cell differentiation trajectories.
 

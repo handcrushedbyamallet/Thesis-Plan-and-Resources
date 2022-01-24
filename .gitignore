@@ -57,3 +57,6 @@ flycheck_*.el
 .DS_Store
 
 .orgids
+
+*.html
+data/

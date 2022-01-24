@@ -1,6 +1,44 @@
-#+TITLE: Code
+#+TITLE: Existing Software
 
 This document contains details on software that will be useful in the project.
+
+* anndata
+* scanpy
+* scvi-tools
+scvi-tools is a software library that revolves around machine learning for single-cell data. Parts, especially the data module will likely be extremely helpful in developing this trajectory inference model. It is built on top of PyTorch.
+
+#+begin_src python :session
+import scvi
+import scanpy as sc
+
+adata = scvi.data.heart_cell_atlas_subsampled()
+#+end_src
+
+We need to preprocess the data to remove noise, genes that are lowly expressed and other outliers. These utilise the scanpy preprocessing submodule.
+
+Note that scvi-tools models require raw counts and not log library size normalised.
+
+#+begin_src python :session
+sc.pp.filter_genes(adata, min_counts=3)
+
+adata.layers["counts"] = adata.X.copy()
+sc.pp.normalize_total(adata, target_sum=1e4)
+sc.pp.log1p(adata)
+adata.raw = adata # freeze the state in '.raw'
+#+end_src
+
+Next it's necessary to perform feature selection before input to the scvi-tools model. The dimensions of the input depend on the model and context but will usually be somewhere in the range of 1000 to 100000 highly variable genes.
+
+#+begin_src python :session
+sc.pp.highly_variable_genes(
+    adata,
+    n_top_genes=1200,
+    subset=True,
+    layer="counts",
+    flavor="seurat_v3",
+    batch_key="cell_source"
+)
+#+end_src
 
 * PyTorch
 * Implicit-MLE

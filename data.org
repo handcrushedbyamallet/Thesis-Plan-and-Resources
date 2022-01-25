@@ -1,0 +1,21 @@
+#+TITLE: Data
+
+* Included in software
+** scvi-tools datasets (scRNA-seq and CITE-seq)
+*** pbmc_seurat_v4_cite_seq
+*** spleen_lymph_cite_seq
+*** heart_cell_atlas_subsampled
+*** pbmcs_10x_cite_seq
+*** purified_pbmc_dataset
+*** dataset_10x
+*** brainlarge_dataset
+*** pbmc_dataset
+*** cortex
+*** seqfishplus
+*** seqfish
+*** smfish
+*** breast_cancer_dataset
+*** mouse_ob_dataset
+*** retina
+*** prefrontalcortex_starmap
+*** frontalcortex_dropseq

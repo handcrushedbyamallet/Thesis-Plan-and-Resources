@@ -3,42 +3,31 @@
 This document contains details on software that will be useful in the project.
 
 * anndata
-* scanpy
-* scvi-tools
-scvi-tools is a software library that revolves around machine learning for single-cell data. Parts, especially the data module will likely be extremely helpful in developing this trajectory inference model. It is built on top of PyTorch.
+* Scanpy [[[https://scanpy.readthedocs.io/][website]], [[https://github.com/theislab/scanpy][code]]]
+Scanpy
 
-#+begin_src python :session
-import scvi
-import scanpy as sc
+* scvi-tools [[[https://scvi-tools.org/][website]], [[https://github.com/YosefLab/scvi-tools][code]]]
+scvi-tools is a framework for dealing with single-cell annotated data `anndata` for use in machine learning models. It is built on top of Scanpy and provides extra functionality and processing steps for data, as well as prebuilt models for various single-cell tasks. Most of the tasks are centered around processing the data for further analysis, and there aren't any methods that are as involved as trajectory inference. It may be a possibility to write part of the trajectory inference code in this framework (at least at the dataprocessing stages), but more I'm anticipating that it will be helpful to understand how the framework works, as I lack some critical domain knowledge in single-cell and don't want to miss preprocessing steps etc. This framework will be useful for reference at least, and interfaces with PyTorch. Below are the APIs and submodules for the framework:
 
-adata = scvi.data.heart_cell_atlas_subsampled()
-#+end_src
+** User - functionality for performing single-cell data science [[[https://docs.scvi-tools.org/en/stable/api/user.html][reference]]]
+The user framework allows for performing common single-cell data science tasks. It has the following submodules:
+*** Model (scvi.model)
+*** External models (scvi.external)
+*** Data loading (scvi.data)
 
-We need to preprocess the data to remove noise, genes that are lowly expressed and other outliers. These utilise the scanpy preprocessing submodule.
+** Developer - APIs and classes for integrating user-defined models into scvi-tools [[[https://docs.scvi-tools.org/en/stable/api/developer.html][reference]]]
+*** Data Loaders
+*** Distributions
+*** Model (Base)
+*** Module
+*** External module
+*** Module (Base)
+*** Neural networks
+*** Train
+*** Utilities
 
-Note that scvi-tools models require raw counts and not log library size normalised.
+** Datasets - datasets useful for benchmarking models [[[https://docs.scvi-tools.org/en/stable/api/datasets.html][reference]]]
 
-#+begin_src python :session
-sc.pp.filter_genes(adata, min_counts=3)
 
-adata.layers["counts"] = adata.X.copy()
-sc.pp.normalize_total(adata, target_sum=1e4)
-sc.pp.log1p(adata)
-adata.raw = adata # freeze the state in '.raw'
-#+end_src
-
-Next it's necessary to perform feature selection before input to the scvi-tools model. The dimensions of the input depend on the model and context but will usually be somewhere in the range of 1000 to 100000 highly variable genes.
-
-#+begin_src python :session
-sc.pp.highly_variable_genes(
-    adata,
-    n_top_genes=1200,
-    subset=True,
-    layer="counts",
-    flavor="seurat_v3",
-    batch_key="cell_source"
-)
-#+end_src
-
-* PyTorch
+* PyTorchGraph
 * Implicit-MLE

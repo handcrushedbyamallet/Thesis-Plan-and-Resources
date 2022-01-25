@@ -2,16 +2,8 @@
 
 This file contains a list of resources, primarily papers, that will be helpful in finishing the project.
 
-* scRNA-seq data
-- mouse cortex data
-- retinal bipolar cells [[[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5003425/][paper]], data]
-- hematopoiesis data18, [paper, data]
-- mouse brain data [paper, data]
-- 10x mouse megacell demonstration [paper, data]
-
-* Differentiable programming
-** Dimensionality reduction and clustering
-*** ACE - Dimensionality reduction and neuralised clustering for single-cell data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], [[https://bitbucket.org/noblelab/ace/src/master/][code]]]
+* Differentiable programming for dimensionality reduction, clustering and normalisation
+** ACE - Dimensionality reduction and neuralised clustering for single-cell data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], [[https://bitbucket.org/noblelab/ace/src/master/][code]]]
 ACE is a methodology that combines dimensionality reduction and clustering on scRNA-seq data in order to identify distinct cell subgroups. ACE asks what expression profiles most distinctly identify the membership of a cell to a particular cell cluster. It constitutes 3 components:
 1. An autoencoder component to perform dimensionality reduction.
 2. A neuralised clustering algorithm to prescribe group membership that acts on the low dimensional output of the autoencoder.
@@ -22,10 +14,10 @@ ACE takes a single-cell gene expression matrix as input.
 #+attr_html: :width 500px
 [[./images/ace.png]]
 
-**** Notes on mixers
+*** Notes on mixers
 In the context of trajectory inference, it could be interesting to think about models that are capable of constructing mixed representations of input data through interpolation in the latent space. Models like BigGAN are capable of mixing representations of discrete data to form hybrid data points. For example, BigGAN is capable of mixing, say, a dog and a flower to form a dogflower or whatever you want to call your new invention (i.e. in https://www.artbreeder.com). I'm not sure if this concept has miliage when talking about cells of (ostensibly) discrete types and functions. An embedding space that is capable of smooth transitions between discrete states may be useful when it comes to differentiation trajectories, or as at least a desireable property.
 
-*** SAUCIE - Exploring single-cell data with deep multitasking neural networks [[[https://www.nature.com/articles/s41592-019-0576-7][paper]], [[https://github.com/KrishnaswamyLab/SAUCIE/][code]]]
+** SAUCIE - Exploring single-cell data with deep multitasking neural networks [[[https://www.nature.com/articles/s41592-019-0576-7][paper]], [[https://github.com/KrishnaswamyLab/SAUCIE/][code]]]
 [[./images/saucie.png]]
 SAUCIE is a popular autoencoder for performing dimensionality reduction on single-cell data. Notably, it is the encoder part of the ACE system. SAUCIE takes measurements from an individual cell as input. It is designed so that differet layers hold differing, but useful representations of the input data. SAUCIE regularises the autoencoder in various ways to perform several useful tasks in the world of single-cell.
 - Methods for single-cell data analysis are held back by large amounts of hetrogeneity, especially on multi-patient or multi-sample data.
@@ -41,21 +33,27 @@ SAUCIE performs 4 key tasks.
 4. Imputation
 Which it does through adding regularisers to the various layers.
 
-**** Clustering
+Clustering
 Clustering in SAUCIE uses the "information dimension" regularisation, which rewards activations for being binerisable. This causes activations to be near 1 or 0, which is subsequently used for clustering based on combinations of the activations. This is achieved through adding the following regularisation term to the loss function:
-**** Batch correction
-Batch correction seeks to mitigate the influence of batch effects, i.e. systematic differences in single-cell data such as machine calebration or environmental discrepancies. This problem is solved through a "maximal mean discrepancy" regularisation factor, in which differences between probability distributions of activations of differing samples are penalised. This works in tandem with the autoencoder part of SAUCIE, which encourages the preservation of the original structure of batches ("batch" here referring to a sample and not a typical batch in SGD). These effects combine to create a balance between preserving information about batch hetrogeneity and eliminating it. Penalising MMD directly would require a meaningful choice of distance and similarity measures over points, which isn't ideal as the data is noisy and sparse. Instead MMD is calculated over an interal layer of the network that penalises based on a manifold of the data represntation of that layer. The MMD is calculated as
+*** Batch correction
+Batch correction seeks to mitigate the influence of batch effects, i.e. systematic differences in single-cell data such as machine calebration or environmental discrepancies. This problem is solved through a "maximal mean discrepancy" regularisation factor, in which differences between probability distributions of activations of differing samples are penalised. This works in tandem with the autoencoder part of SAUCIE, which encourages the preservation of the original structure of batches ("batch" here referring to a sample and not a typical batch in SGD). These effects combine to create a balance between preserving information about batch hetrogeneity and eliminating it. Penalising MMD directly would require a meaningful choice of distance and similarity measures over points, which isn't ideal as the data is noisy and sparse. Instead MMD is calculated over an interal layer of the network that penalises based on a manifold of the data represntation of that layer.
 [[./images/saucie_mmd.png]]
-**** Imputation and Denoising
+*** Imputation and Denoising
 These tasks are performed by the autoencoder simply out of virtue of it being an autoencoder. The real goal here is to recover epistatic causal effects where traditional mathematical methods such as PCA rely only on distance metrics and aren't sophisticated enough to account for these effects.
 
-*** Other resources
+** scVI - Deep generative modelling for Single-cell transcriptomics [[[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6289068/][paper]], [[https://github.com/YosefLab/scvi-tools][code]]]
+*** scVI is a probabilistic modelling approach to normalise scRNA-seq data for downstream analysis. It is based on a hierarchical Bayesian model in which the conditional distribution is learned by a neural network model. It was created to address issues of other probabilistic approaches not scaling well to large datasets and has excellent software tooling.
+
+** totalVI - Joint probabilistic modeling of single-cell multi-omic data [[[https://www.nature.com/articles/s41592-020-01050-x][paper]], [[https://docs.scvi-tools.org/en/stable/references.html#gayososteier21][code]]]
+
+** Other resources
 - [[https://github.com/zhoushengisnoob/DeepClustering][A list of neural clustering techniques]]
 - [[https://github.com/uci-cbcl/BioML][A list of differentiable systems for dealing with scRNA-seq data]]
 
-** Integrating multiple datasets
+* Integrating multiple datasets
 *** scArches - Query to reference single-cell integration with transfer learning [[[https://www.biorxiv.org/content/10.1101/2020.07.16.205997v1][paper]], [[https://github.com/theislab/scarches][code]]]
-** Differentiable programming for solving combinatorial optimisation problems
+
+* Differentiable programming for solving combinatorial optimisation problems
 *** Implicit-MLE [[[https://arxiv.org/pdf/2106.01798.pdf][paper]], [[https://github.com/uclnlp/torch-imle][code]], [[https://www.youtube.com/watch?v=W2UT8NjUqrk][video]]]
 *** Algorithmic concept-based explainable reasoning [[[https://arxiv.org/abs/2107.07493][paper]], [[https://github.com/HekpoMaH/algorithmic-concepts-reasoning][code]]]
 

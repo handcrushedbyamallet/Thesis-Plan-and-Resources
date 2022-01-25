@@ -2,10 +2,10 @@
 #+DATE:    2022-01-24
 #+CONTACT: Sam Considine
 
-* Tasks [0/3]
-- [ ] Add SAUCIE
+* Tasks [2/3]
+- [X] Add SAUCIE
 - [ ] Add VITAE
-- [ ] Explore scvi-tools and add relevant publications to resources file
+- [X] Explore scvi-tools and add relevant publications to resources file
 * Timeframe
 To be completed by the 18th of Jan
 

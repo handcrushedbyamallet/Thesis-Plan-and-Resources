@@ -7,7 +7,7 @@ This document contains details on software that will be useful in the project.
 Scanpy
 
 * scvi-tools [[[https://scvi-tools.org/][website]], [[https://github.com/YosefLab/scvi-tools][code]]]
-scvi-tools is a framework for dealing with single-cell annotated data `anndata` for use in machine learning models. It is built on top of Scanpy and provides extra functionality and processing steps for data, as well as prebuilt models for various single-cell tasks. Most of the tasks are centered around processing the data for further analysis, and there aren't any methods that are as involved as trajectory inference. It may be a possibility to write part of the trajectory inference code in this framework (at least at the dataprocessing stages), but more I'm anticipating that it will be helpful to understand how the framework works, as I lack some critical domain knowledge in single-cell and don't want to miss preprocessing steps etc. This framework will be useful for reference at least, and interfaces with PyTorch. Below are the APIs and submodules for the framework:
+scvi-tools is a framework for dealing with single-cell annotated data AnnData for use in machine learning models. It is built on top of Scanpy and provides extra functionality and processing steps for data, as well as prebuilt models for various single-cell tasks. Most of the tasks are centered around processing the data for further analysis, and there aren't any methods that are as involved as trajectory inference. It may be a possibility to write part of the trajectory inference code in this framework (at least at the dataprocessing stages), but more I'm anticipating that it will be helpful to understand how the framework works, as I lack some critical domain knowledge in single-cell and don't want to miss preprocessing steps etc. This framework will be useful for reference at least, and interfaces with PyTorch. Below are the APIs and submodules for the framework:
 
 ** User - functionality for performing single-cell data science [[[https://docs.scvi-tools.org/en/stable/api/user.html][reference]]]
 The user framework allows for performing common single-cell data science tasks. It has the following submodules:
@@ -16,18 +16,61 @@ The user framework allows for performing common single-cell data science tasks. 
 *** Data loading (scvi.data)
 
 ** Developer - APIs and classes for integrating user-defined models into scvi-tools [[[https://docs.scvi-tools.org/en/stable/api/developer.html][reference]]]
-*** Data Loaders
-*** Distributions
-*** Model (Base)
-*** Module
-*** External module
-*** Module (Base)
-*** Neural networks
-*** Train
-*** Utilities
+*** Data Loaders (scvi.dataloaders)
+This submodule loads tensors from AnnData objects.
+*** Distributions (scvi.distributions)
+This submodule provides distributions that help with probabalistic modelling, usually for understanding gene expression.
+*** Model (Base) (scvi.model.base)
+The base model API which is used to construct model classes.
+*** Module (scvi.module)
+Common module classes, such as a neural network classifier, variational autoencoder etc.
+*** External module (scvi.external)
+Mostly reimplimentations of modules from various external papers.
+*** Module (Base) (scvi.module.base)
+A set of base classes for building modules.
+*** Neural networks (scvi.nn)
+Neural network building blocks (i.e. nn.FCLayers for fully connected layers, nn.Encoder for encoders etc)
+*** Train (scvi.train)
+Training plans for train, test and valudation steps for modules.
+*** Utilities (scvi.utils)
+Does what it says on the tin. Includes only a progress bar and a docstring processor for setup_anndata methods.
 
 ** Datasets - datasets useful for benchmarking models [[[https://docs.scvi-tools.org/en/stable/api/datasets.html][reference]]]
-
+The following dataset methods are provided with scvi. It would be worth investigating each of these for suitability in the training of the TI procedure.
+*** data.pbmc_seurat_v4_cite_seq
+Dataset of PBMCs measured with CITE-seq (161764 cells).
+*** data.spleen_lymph_cite_seq
+Immune cells from the murine spleen and lymph nodes [GayosoSteier21].
+*** data.heart_cell_atlas_subsampled
+Combined single cell and single nuclei RNA-Seq data of 485K cardiac cells with annotations.
+*** data.pbmcs_10x_cite_seq
+Filtered PBMCs from 10x Genomics profiled with RNA and protein.
+*** data.purified_pbmc_dataset
+Purified PBMC dataset from: "Massively parallel digital transcriptional profiling of single cells".
+*** data.dataset_10x
+Loads a file from 10x website.
+*** data.brainlarge_dataset
+Loads brain-large dataset.
+*** data.pbmc_dataset
+Loads pbmc dataset.
+*** data.cortex
+Loads cortex dataset.
+*** data.seqfishplus
+seqFISH+ of cortex, subventricular zone and olfactory bulb of mouse brain.
+*** data.seqfish
+Seqfish dataset.
+*** data.smfish
+Loads osmFISH data of mouse cortex cells from the Linarsson lab.
+*** data.breast_cancer_dataset
+Loads breast cancer dataset.
+*** data.mouse_ob_dataset
+Loads mouse ob dataset.
+*** data.retina
+Loads retina dataset.
+*** data.prefrontalcortex_starmap
+Loads a starMAP dataset of mouse pre-frontal cortex (Wang et al., 2018).
+*** data.frontalcortex_dropseq
+Load the cells from the mouse frontal cortex sequenced by the Dropseq technology (Saunders et al., 2018).
 
 * PyTorchGraph
 * Implicit-MLE

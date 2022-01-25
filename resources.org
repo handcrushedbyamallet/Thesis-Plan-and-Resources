@@ -41,22 +41,23 @@ Batch correction seeks to mitigate the influence of batch effects, i.e. systemat
 *** Imputation and Denoising
 These tasks are performed by the autoencoder simply out of virtue of it being an autoencoder. The real goal here is to recover epistatic causal effects where traditional mathematical methods such as PCA rely only on distance metrics and aren't sophisticated enough to account for these effects.
 
-** scVI - Deep generative modelling for Single-cell transcriptomics [[[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6289068/][paper]], [[https://github.com/YosefLab/scvi-tools][code]]]
-*** scVI is a probabilistic modelling approach to normalise scRNA-seq data for downstream analysis. It is based on a hierarchical Bayesian model in which the conditional distribution is learned by a neural network model. It was created to address issues of other probabilistic approaches not scaling well to large datasets and has excellent software tooling.
+** scVI (single-cell variational inference) - Deep generative modelling for Single-cell transcriptomics [[[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6289068/][paper]], [[https://github.com/YosefLab/scvi-tools][code]]]
+scVI is a probabilistic modelling approach to normalise scRNA-seq data for downstream analysis. It is based on a hierarchical Bayesian model in which the conditional distribution is learned by a neural network model. It was created to address issues of other probabilistic approaches not scaling well to large datasets and has excellent software tooling. Techniques in dimensionality reduction of single-cell data usually assume that a manifold underlies structure of the cells x genes data that can be represented by a generalised linear model.
+
+scVI takes the observed gene expression of each cell as drawn from a conditional zero-inflated negative binomial distribution. The distribution is conditioned on the batch annotation of each cell and 2 latent variables: the nuisance variation (specifically from capture efficienty and sequencing depth), which acts as a scaling factor over specific cells, and the a low-dimensional vector of gaussians that represents the biological variation between cells.
 
 ** totalVI - Joint probabilistic modeling of single-cell multi-omic data [[[https://www.nature.com/articles/s41592-020-01050-x][paper]], [[https://docs.scvi-tools.org/en/stable/references.html#gayososteier21][code]]]
 
 ** Other resources
 - [[https://github.com/zhoushengisnoob/DeepClustering][A list of neural clustering techniques]]
-- [[https://github.com/uci-cbcl/BioML][A list of differentiable systems for dealing with scRNA-seq data]]
+- [[https://github.com/uci-cbcl/BioML][A list of systems for dealing with scRNA-seq data]]
 
 * Integrating multiple datasets
-*** scArches - Query to reference single-cell integration with transfer learning [[[https://www.biorxiv.org/content/10.1101/2020.07.16.205997v1][paper]], [[https://github.com/theislab/scarches][code]]]
+** scArches - Query to reference single-cell integration with transfer learning [[[https://www.biorxiv.org/content/10.1101/2020.07.16.205997v1][paper]], [[https://github.com/theislab/scarches][code]]]
 
 * Differentiable programming for solving combinatorial optimisation problems
-*** Implicit-MLE [[[https://arxiv.org/pdf/2106.01798.pdf][paper]], [[https://github.com/uclnlp/torch-imle][code]], [[https://www.youtube.com/watch?v=W2UT8NjUqrk][video]]]
-*** Algorithmic concept-based explainable reasoning [[[https://arxiv.org/abs/2107.07493][paper]], [[https://github.com/HekpoMaH/algorithmic-concepts-reasoning][code]]]
+** Implicit-MLE [[[https://arxiv.org/pdf/2106.01798.pdf][paper]], [[https://github.com/uclnlp/torch-imle][code]], [[https://www.youtube.com/watch?v=W2UT8NjUqrk][video]]]
+** Algorithmic concept-based explainable reasoning [[[https://arxiv.org/abs/2107.07493][paper]], [[https://github.com/HekpoMaH/algorithmic-concepts-reasoning][code]]]
 
 * Trajectory inference
-** Neural algorithms for Trajectory Inference
-*** VITAE [[[https://www.biorxiv.org/content/10.1101/2020.12.26.424452v1.full.pdf][paper]], [[https://github.com/jaydu1/VITAE][code]]]
+** VITAE [[[https://www.biorxiv.org/content/10.1101/2020.12.26.424452v1.full.pdf][paper]], [[https://github.com/jaydu1/VITAE][code]]]

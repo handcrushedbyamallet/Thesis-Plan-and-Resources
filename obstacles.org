@@ -1,0 +1,31 @@
+#+TITLE: Obstacles
+
+This document contains obstacles in performing trajectory inference, dealing with single-cell data and the like. It contains issues both for creating a differentiable TI method, but also issues with current TI procedures that may be addressed by differentiable programming.
+
+* Batch effects
+Batch effects is a term used to descrive when non-biological factors are responsible for measurable observations in the data.
+** Solutions
+The umbrella turm used to describe methods that deal with batch effects is "batch correction" techniques.
+
+Uncorrected:
+[[./images/batch_uncorrected.png]]
+
+Corrected:
+[[./images/batch_corrected.png]]
+
+*** Autoencoder models
+
+* Noise
+** Capture efficiency
+** Sequencing depth
+** Solutions
+*** Probabalistic models
+
+* High-dimensional data
+Techniques in dimensionality reduction of single-cell data usually assume that a manifold underlies structure of the cells x genes data that can be represented by a generalised linear model. This fails to take into account epistatic effects or any non-linear effects that may be present in cells gene expression.
+** Solutions
+
+* Sparse data
+** Solutions
+*** Zero-inflated models (usually zero-inflated negative binomial)
+Zero-inflated models are models based on distributions that allow for frequent zero valued observations.

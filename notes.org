@@ -1,0 +1,3 @@
+#+TITLE: Notes
+
+- There's a methodology called 'negative binomial regression' [[https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1874-1][paper]] that the negative binomial methodologies may have taken from. The negative binomial apaprently overfits scRNA-seq data. It's probably worth reading the original paper here as it seems to have been quite influencial in the probabalistic modelling of gene expression space.

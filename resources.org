@@ -1,9 +1,9 @@
 #+TITLE: Resources
 
-This file contains a list of resources, primarily papers, that will be helpful in finishing the project.
+This file contains a list of papers and other research projects that are relevant to this project. This file will ideally become the literature review section of the thesis.
 
 * Differentiable programming for dimensionality reduction, clustering and normalisation
-** ACE - Dimensionality reduction and neuralised clustering for single-cell data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], [[https://bitbucket.org/noblelab/ace/src/master/][code]]]
+** ACE - Dimensionality reduction and neuralised clustering for single-cell data [[[http://proceedings.mlr.press/v139/lu21e/lu21e.pdf][paper]], [[https://bitbucket.org/noblelab/ace/src/master/][code]]] :differentiable:encoder:clustering:
 ACE is a methodology that combines dimensionality reduction and clustering on scRNA-seq data in order to identify distinct cell subgroups. ACE asks what expression profiles most distinctly identify the membership of a cell to a particular cell cluster. It constitutes 3 components:
 1. An autoencoder component to perform dimensionality reduction.
 2. A neuralised clustering algorithm to prescribe group membership that acts on the low dimensional output of the autoencoder.
@@ -15,11 +15,11 @@ ACE takes a single-cell gene expression matrix as input.
 [[./images/ace.png]]
 
 *** Notes on mixers
-In the context of trajectory inference, it could be interesting to think about models that are capable of constructing mixed representations of input data through interpolation in the latent space. Models like BigGAN are capable of mixing representations of discrete data to form hybrid data points. For example, BigGAN is capable of mixing, say, a dog and a flower to form a dogflower or whatever you want to call your new invention (i.e. in https://www.artbreeder.com). I'm not sure if this concept has miliage when talking about cells of (ostensibly) discrete types and functions. An embedding space that is capable of smooth transitions between discrete states may be useful when it comes to differentiation trajectories, or as at least a desireable property.
+In the context of trajectory inference, it could be interesting to think about models that are capable of constructing mixed representations of input data through interpolation in the latent space. Models like BigGAN are capable of mixing representations of discrete data to form hybrid data points. For example, BigGAN is capable of mixing, say, a dog and a flower to form a dogflower or whatever you want to call your new invention (i.e. in https://www.artbreeder.com). I'm not sure if this concept has mileage when talking about cells of (ostensibly) discrete types and functions. An embedding space that is capable of smooth transitions between discrete states may be useful when it comes to differentiation trajectories, or as at least a desireable property.
 
-** SAUCIE - Exploring single-cell data with deep multitasking neural networks [[[https://www.nature.com/articles/s41592-019-0576-7][paper]], [[https://github.com/KrishnaswamyLab/SAUCIE/][code]]]
+** SAUCIE - Exploring single-cell data with deep multitasking neural networks [[[https://www.nature.com/articles/s41592-019-0576-7][paper]], [[https://github.com/KrishnaswamyLab/SAUCIE/][code]]] :differentiable:encoder:batch_effects:
 [[./images/saucie.png]]
-SAUCIE is a popular autoencoder for performing dimensionality reduction on single-cell data. Notably, it is the encoder part of the ACE system. SAUCIE takes measurements from an individual cell as input. It is designed so that differet layers hold differing, but useful representations of the input data. SAUCIE regularises the autoencoder in various ways to perform several useful tasks in the world of single-cell.
+SAUCIE is a popular autoencoder for performing dimensionality reduction on single-cell data. Notably, it is the encoder part of the ACE system. SAUCIE takes measurements from an individual cell as input. It is designed so that different layers hold differing but useful representations of the input data. SAUCIE regularises the autoencoder in various ways to perform several useful tasks in single-cell data science.
 - Methods for single-cell data analysis are held back by large amounts of hetrogeneity, especially on multi-patient or multi-sample data.
 - Advantage of autoencoders is that they can learn their own features that are dependent on structure in the data without having to define a metric such as a notion of "distance" or other mathmatical abstraction.
 - In SAUCIE, different aspects are emphasised in different layers.
@@ -33,7 +33,7 @@ SAUCIE performs 4 key tasks.
 4. Imputation
 Which it does through adding regularisers to the various layers.
 
-Clustering
+*** Clustering
 Clustering in SAUCIE uses the "information dimension" regularisation, which rewards activations for being binerisable. This causes activations to be near 1 or 0, which is subsequently used for clustering based on combinations of the activations. This is achieved through adding the following regularisation term to the loss function:
 *** Batch correction
 Batch correction seeks to mitigate the influence of batch effects, i.e. systematic differences in single-cell data such as machine calebration or environmental discrepancies. This problem is solved through a "maximal mean discrepancy" regularisation factor, in which differences between probability distributions of activations of differing samples are penalised. This works in tandem with the autoencoder part of SAUCIE, which encourages the preservation of the original structure of batches ("batch" here referring to a sample and not a typical batch in SGD). These effects combine to create a balance between preserving information about batch hetrogeneity and eliminating it. Penalising MMD directly would require a meaningful choice of distance and similarity measures over points, which isn't ideal as the data is noisy and sparse. Instead MMD is calculated over an interal layer of the network that penalises based on a manifold of the data represntation of that layer.
@@ -41,10 +41,24 @@ Batch correction seeks to mitigate the influence of batch effects, i.e. systemat
 *** Imputation and Denoising
 These tasks are performed by the autoencoder simply out of virtue of it being an autoencoder. The real goal here is to recover epistatic causal effects where traditional mathematical methods such as PCA rely only on distance metrics and aren't sophisticated enough to account for these effects.
 
-** scVI (single-cell variational inference) - Deep generative modelling for Single-cell transcriptomics [[[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6289068/][paper]], [[https://github.com/YosefLab/scvi-tools][code]]]
-scVI is a probabilistic modelling approach to normalise scRNA-seq data for downstream analysis. It is based on a hierarchical Bayesian model in which the conditional distribution is learned by a neural network model. It was created to address issues of other probabilistic approaches not scaling well to large datasets and has excellent software tooling. Techniques in dimensionality reduction of single-cell data usually assume that a manifold underlies structure of the cells x genes data that can be represented by a generalised linear model.
+** scVI (single-cell variational inference) - Deep generative modelling for Single-cell transcriptomics [[[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6289068/][paper]], [[https://github.com/YosefLab/scvi-tools][code]]] :differentiable:encoder:batch_effects:ZINB:probabalistic:
+scVI is a probabilistic modelling approach to normalise scRNA-seq data for downstream analysis. It is based on a hierarchical Bayesian model in which the conditional distribution is learned by a neural network model. It was created to address issues of other probabilistic approaches not scaling well to large datasets and has excellent software tooling.
 
 scVI takes the observed gene expression of each cell as drawn from a conditional zero-inflated negative binomial distribution. The distribution is conditioned on the batch annotation of each cell and 2 latent variables: the nuisance variation (specifically from capture efficienty and sequencing depth), which acts as a scaling factor over specific cells, and the a low-dimensional vector of gaussians that represents the biological variation between cells.
+
+*** Training
+scVI consists of a model in two parts. The first part learns the distribution of latent variables $q(z_n \log l_n | x_n, s_n)$ for latent variables $z_n$, 1-dimensional Gaussian nuisance variable $l_n$, under observed gene expression $x_n$ (I think that $s_n$ is supposed to be a batch identifier, but could be wrong). The second part of the model uses the latent variables to generate a posterior ZINB of the data $p(x_{ng} | z_n, s_n, l_n)$.
+
+The hierarchical model is outlined below:
+[[./images/scvi-hierarchy.png]]
+
+The model uses [[https://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1285773][variational inference]] to approximate the posterior $p(z_n, l_n | x_n, s_n) = q(z_n | x_n s_n) q(l_n | x_n, s_n)$. The first of these variation distributions is modelled as gaussian and the second as log-normal with scalar mean and variance. The variational lower bound is therefore.
+[[./images/scvi_objective.png]]
+which is used as the objective function.
+
+The model consists of 6 neural networks and offers a generative scheme where intermediate values provide a batch-corrected and normalised interpretation the percentage transcripts in each cell that originate from each gene.
+
+[[./images/scvi.jpg]]
 
 ** totalVI - Joint probabilistic modeling of single-cell multi-omic data [[[https://www.nature.com/articles/s41592-020-01050-x][paper]], [[https://docs.scvi-tools.org/en/stable/references.html#gayososteier21][code]]]
 
@@ -54,7 +68,7 @@ scVI takes the observed gene expression of each cell as drawn from a conditional
 
 * Integrating multiple datasets
 ** scArches - Query to reference single-cell integration with transfer learning [[[https://www.biorxiv.org/content/10.1101/2020.07.16.205997v1][paper]], [[https://github.com/theislab/scarches][code]]]
-
+[[./images/scarches.png]]
 * Differentiable programming for solving combinatorial optimisation problems
 ** Implicit-MLE [[[https://arxiv.org/pdf/2106.01798.pdf][paper]], [[https://github.com/uclnlp/torch-imle][code]], [[https://www.youtube.com/watch?v=W2UT8NjUqrk][video]]]
 ** Algorithmic concept-based explainable reasoning [[[https://arxiv.org/abs/2107.07493][paper]], [[https://github.com/HekpoMaH/algorithmic-concepts-reasoning][code]]]

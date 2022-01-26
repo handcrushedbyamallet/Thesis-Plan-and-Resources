@@ -10,4 +10,4 @@ This repo contains notes and resource on a project to create a differentiable pr
 - [[file:technical_details.org][Technical Details]] - Technical details of how the system will function and a technical breakdown of its workings.
 - [[file:project_plan.org][Project plan]] - A breakdown of the tasks that need to be completed and some project planning and management.
 - [[file:obstacles.org][Obstacles]] - A breakdown of the challenges in performing trajectory inference and the solutions to those issues.
-- Notes - Miscellaneous notes on the project.
+- [[file:notes.org][Notes]] - Miscellaneous notes on the project.

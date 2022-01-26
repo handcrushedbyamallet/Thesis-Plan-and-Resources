@@ -11,3 +11,4 @@ This repo contains notes and resource on a project to create a differentiable pr
 - [[file:project_plan.org][Project plan]] - A breakdown of the tasks that need to be completed and some project planning and management.
 - [[file:obstacles.org][Obstacles]] - A breakdown of the challenges in performing trajectory inference and the solutions to those issues.
 - [[file:notes.org][Notes]] - Miscellaneous notes on the project.
+- [[file:data.org][Data]] - Notes on the datasets available for training, benchmarking or evaluation of the results.

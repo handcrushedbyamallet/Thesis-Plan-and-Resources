@@ -2,13 +2,6 @@
 #+DATE:    2022-01-24
 #+CONTACT: Sam Considine
 
-* Tasks [2/3]
-- [X] Add SAUCIE
-- [ ] Add VITAE
-- [X] Explore scvi-tools and add relevant publications to resources file
-* Timeframe
-To be completed by the 18th of Jan
-
 This repo contains notes and resource on a project to create a differentiable process for calculating cell differentiation trajectories.
 
 * Documents

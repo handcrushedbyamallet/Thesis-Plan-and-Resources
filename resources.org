@@ -54,7 +54,7 @@ The hierarchical model is outlined below:
 
 The model uses [[https://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1285773][variational inference]] to approximate the posterior $p(z_n, l_n | x_n, s_n) = q(z_n | x_n s_n) q(l_n | x_n, s_n)$. The first of these variation distributions is modelled as gaussian and the second as log-normal with scalar mean and variance. The variational lower bound is therefore.
 [[./images/scvi_objective.png]]
-which is used as the objective function.
+which is used as the loss function.
 
 The model consists of 6 neural networks and offers a generative scheme where intermediate values provide a batch-corrected and normalised interpretation the percentage transcripts in each cell that originate from each gene.
 

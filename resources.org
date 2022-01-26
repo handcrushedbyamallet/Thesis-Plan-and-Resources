@@ -50,10 +50,13 @@ scVI takes the observed gene expression of each cell as drawn from a conditional
 scVI consists of a model in two parts. The first part learns the distribution of latent variables $q(z_n \log l_n | x_n, s_n)$ for latent variables $z_n$, 1-dimensional Gaussian nuisance variable $l_n$, under observed gene expression $x_n$ (I think that $s_n$ is supposed to be a batch identifier, but could be wrong). The second part of the model uses the latent variables to generate a posterior ZINB of the data $p(x_{ng} | z_n, s_n, l_n)$.
 
 The hierarchical model is outlined below:
+
 [[./images/scvi-hierarchy.png]]
 
 The model uses [[https://www.tandfonline.com/doi/abs/10.1080/01621459.2017.1285773][variational inference]] to approximate the posterior $p(z_n, l_n | x_n, s_n) = q(z_n | x_n s_n) q(l_n | x_n, s_n)$. The first of these variation distributions is modelled as gaussian and the second as log-normal with scalar mean and variance. The variational lower bound is therefore.
+
 [[./images/scvi_objective.png]]
+
 which is used as the loss function.
 
 The model consists of 6 neural networks and offers a generative scheme where intermediate values provide a batch-corrected and normalised interpretation the percentage transcripts in each cell that originate from each gene.
@@ -61,6 +64,7 @@ The model consists of 6 neural networks and offers a generative scheme where int
 [[./images/scvi.jpg]]
 
 ** totalVI - Joint probabilistic modeling of single-cell multi-omic data [[[https://www.nature.com/articles/s41592-020-01050-x][paper]], [[https://docs.scvi-tools.org/en/stable/references.html#gayososteier21][code]]]
+totalVI is a method of integrating multi-omic data through probabalistic modelling of gene expression.
 
 ** Other resources
 - [[https://github.com/zhoushengisnoob/DeepClustering][A list of neural clustering techniques]]
